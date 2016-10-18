@@ -28,7 +28,7 @@ class User(object):
         user = User.get_by_email(email)
         if user is not None:
             #Check the password
-            return user['password'] == password
+            return user.password == password
         return False
 
     @classmethod
@@ -50,13 +50,12 @@ class User(object):
         #Login_vide has already been called
         session['email'] = user_email
 
-
     @staticmethod
     def logout():
         session['email'] = None
 
     def get_blogs(self):
-        return Blog.find_by_author_id(self.id)
+        return Blog.find_by_author_id(self._id)
 
     def new_blog(self, title, description):
         blog = Blog(author=self.email,
