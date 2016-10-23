@@ -46,14 +46,14 @@ class Post(object):
     @classmethod
     def from_mongo(cls,_id):
         post_data =  Database.find_one(collection='posts', query={'_id':_id})
-        # return cls(**post_data)
+        return cls(**post_data)
 
-        return cls(blog_id=post_data['psot_id'],
-                   title=post_data['title'],
-                   content=post_data['content'],
-                   author=post_data['author'],
-                   created_data=post_data['created_data'],
-                   _id=post_data['_id'])
+        # return cls(blog_id=post_data['psot_id'],
+        #            title=post_data['title'],
+        #            content=post_data['content'],
+        #            author=post_data['author'],
+        #            created_data=post_data['created_data'],
+        #            _id=post_data['_id'])
 
     @staticmethod
     def from_blog(id):

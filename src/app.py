@@ -4,10 +4,12 @@ from flask import request
 from flask import session
 
 from src.common.database import Database
+from src.models.blog import Blog
 from src.models.user import User
 
 app = Flask(__name__)
 app.secret_key = "1234"
+
 
 @app.route('/')
 def home_template():
@@ -22,6 +24,7 @@ def hello_method():
 @app.route('/register')
 def register_method():
     return render_template("register.html")
+
 
 @app.before_first_request
 def initialize_database():
@@ -48,6 +51,7 @@ def register_user():
     User.register(email, password)
     return render_template("profile.html", email=session['email'])
 
+
 @app.route('/blogs/<string:user_id>')
 @app.route('/blogs')
 def user_blogs(user_id=None):
@@ -59,9 +63,15 @@ def user_blogs(user_id=None):
         user = User.get_by_email(session['email'])
 
     blogs = user.get_blogs()
-    return render_template("user_blogs.html", blogs = blogs, email=user.email)
+    return render_template("user_blogs.html", blogs=blogs, email=user.email)
 
 
+@app.route('/posts/<string:blog_id>')
+def blog_posts(blog_id):
+    blog = Blog.from_mongo(blog_id)
+    posts = blog.get_posts()
 
-if __name__=='__main__':
+    return render_template("posts.html", blog_title=blog.title, posts = posts)
+
+if __name__ == '__main__':
     app.run(port=4989, debug=True)
