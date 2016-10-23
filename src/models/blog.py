@@ -22,7 +22,6 @@ class Blog(object):
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def new_post(self, title, content, date=datetime.datetime.utcnow()):
-
         post = Post(blog_id=self._id,
                     title=title,
                     content=content,
@@ -48,7 +47,8 @@ class Blog(object):
 
     @classmethod
     def from_mongo(cls, id):
-        blog_data = Database.find_one(collection='blogs', query={'_id': id})
+        blog_data = Database.find_one(collection='blogs',
+                                      query={'_id': id})
         return cls(**blog_data)
         # return cls(author=blog_data['author'],
         #            title=blog_data['title'],
@@ -58,5 +58,5 @@ class Blog(object):
     @classmethod
     def find_by_author_id(cls, author_id):
         blogs = Database.find(collection='blogs',
-                                 query={'author_id': author_id})
-        return [cls (**blog) for blog in blogs]
+                              query={'author_id': author_id})
+        return [cls(**blog) for blog in blogs]
