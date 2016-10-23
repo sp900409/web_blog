@@ -2,6 +2,9 @@
 {% block content %}
 <div class="container">
     <h2>{{email}}'s blogs</h2>
+    <a href="/blogs/new">
+        <button class="btn btn-primary">New Blog</button>
+    </a>
     {% for blog in blogs %}
     <h3>{{blog.title}}</h3>
     <a href="/posts/{{blog._id}}">go to this</a>
