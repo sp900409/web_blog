@@ -1,5 +1,6 @@
-from src.common.database import Database
 import uuid,datetime
+from src.common.database import Database
+
 from flask import session
 from src.models.blog import Blog
 
@@ -27,7 +28,7 @@ class User(object):
         # check whether a user's email matach the password they send us
         user = User.get_by_email(email)
         if user is not None:
-            #Check the password
+            # Check the password
             return user.password == password
         return False
 
@@ -36,13 +37,13 @@ class User(object):
         user = cls.get_by_email(email)
         if user is None:
             #User doesn't exist
-            new_user = User(email, password)
+            new_user = cls(email, password)
             new_user.save_to_mongo()
             session['email'] = email
             return True
         else:
             # User exists
-            print "user reg fail"
+            print "user register fail"
             return False
 
     @staticmethod
@@ -62,6 +63,7 @@ class User(object):
                     title=title,
                     description=description,
                     author_id=self._id)
+
         blog.save_to_mongo()
 
     @staticmethod

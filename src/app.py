@@ -35,6 +35,7 @@ def initialize_database():
 def login_user():
     email = request.form['email']
     password = request.form['password']
+
     if User.login_valid(email, password):
         User.login(email)
         session['email'] = email
@@ -57,7 +58,7 @@ def register_user():
 def user_blogs(user_id=None):
     print "user_id is " + str(user_id) + "session[email] is: " + session['email']
     if user_id is not None:
-        user = User.get_by_id()
+        user = User.get_by_id(user_id)
     else:
         print "Getting User class by session email!!!"
         user = User.get_by_email(session['email'])
