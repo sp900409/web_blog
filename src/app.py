@@ -72,7 +72,7 @@ def blog_posts(blog_id):
     blog = Blog.from_mongo(blog_id)
     posts = blog.get_posts()
 
-    return render_template("posts.html", blog_title=blog.title, posts = posts)
+    return render_template("posts.html", blog = blog, posts = posts)
 
 if __name__ == '__main__':
     app.run(port=4989, debug=True)

@@ -3,7 +3,8 @@
 <div class="container">
     <h2>{{email}}'s blogs</h2>
     {% for blog in blogs %}
-    <h3>blog.title</h3>
+    <h3>{{blog.title}}</h3>
+    <a href="/posts/{{blog._id}}">go to this</a>
     <p>{{ blog.description}}</p>
     <hr>
     {% endfor%}
